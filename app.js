@@ -2,6 +2,7 @@ let express = require('express');
 let app = express();
 let path = require('path');
 let http = require('http');
+let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
 // 导入配置
 let config = require('./config');
@@ -10,17 +11,25 @@ let httpServer = http.createServer(app);
 // app配置
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// 处理post
+// 中间件
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 // 静态文件夹
 app.use(express.static(path.join(__dirname, 'public')));
-// 处理跨域
+// 全局处理
 app.all('*', function (req, res, next) {
+  // 处理跨域
   res.append('Access-Control-Allow-Origin', '*');
-  next();
+  res.append('Access-Control-Allow-Headers', 'Content-Type,Content-Length, Auth, Accept,X-Requested-With');
+  res.append('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);/* 让options请求快速返回 */
+  } else {
+    next();
+  }
 });
-// 导入路由
+// 导入子路由
 let mainRouter = require('./routes');
 app.use('/', mainRouter);
 // 启动服务
