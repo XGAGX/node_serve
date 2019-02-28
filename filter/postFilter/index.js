@@ -5,7 +5,7 @@ let express = require('express');
 let router = express.Router();
 let fs = require('fs');
 let path = require('path');
-let config = require('../../environment');
+let config = require('../../config');
 let globa = require('../../globa');
 let files = fs.readdirSync(path.join(__dirname, '/controller'));
 let modules = {};
@@ -25,7 +25,7 @@ files.forEach(file => {
         let pass = globa.setReturnObj();
         let user = globa.user.getUser(req);
         // 权限判断
-        if (config.privateModule.indexOf(_file) !== -1) {
+        if (config.postPrivateModule.indexOf(_file) !== -1) {
           pass.mag = await privateModule(user);
         }
         if (pass.mag === '') {

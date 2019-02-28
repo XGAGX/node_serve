@@ -1,5 +1,6 @@
 /**
  * 用户信息相关
+ * 进入模块之前获取用户信息
  */
 let jwt = require('jsonwebtoken');
 let config = require('../config');

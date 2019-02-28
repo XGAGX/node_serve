@@ -10,7 +10,7 @@ module.exports = function (app) {
   let credentials = { key: privateKey, cert: certificate };
   // 创建服务
   let httpsServer = https.createServer(credentials, app);
-  httpsServer.listen(config.http, function () {
-    console.log('HTTPS 服务启动', config.https);
+  httpsServer.listen(config.httpsPort, function () {
+    console.log('HTTPS 服务启动', config.httpsPort);
   });
 };
