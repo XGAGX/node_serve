@@ -1,13 +1,14 @@
-let express = require('express');
-let app = express();
-let path = require('path');
-let http = require('http');
-let cookieParser = require('cookie-parser');
-let bodyParser = require('body-parser');
+const express = require('express');
+const app = express();
+const path = require('path');
+const http = require('http');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+
 // 导入配置
-let config = require('./config');
+const config = require('./config');
 // 创建服务
-let httpServer = http.createServer(app);
+const httpServer = http.createServer(app);
 // app配置
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -15,6 +16,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+// const upload = ;
+// app.use(multer({ dest: './uploads' }));
 // 静态文件夹
 app.use(express.static(path.join(__dirname, 'public')));
 // 全局处理
@@ -30,7 +33,7 @@ app.all('*', function (req, res, next) {
   }
 });
 // 导入子路由
-let mainRouter = require('./routes');
+const mainRouter = require('./routes');
 app.use('/', mainRouter);
 // 启动服务
 httpServer.listen(config.httpPort, function () {
