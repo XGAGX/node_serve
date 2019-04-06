@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.js"></script>
+    <link rel="stylesheet" href="./element-ui.css">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+    <link rel="stylesheet" href="./tree.css">
+    <script src="./element-ui.js"></script>
+    <script src="./tree.js"></script>
+</head>
+
+<body>
+    <!-- <button >T</button> -->
+    <div id="app">
+        <button @click="OnZTransferShew">弹出</button>
+        <z-Transfer v-if="zTransferShew" :cancel="cancel" :confirmed="confirmed"></z-Transfer>
+    </div>
+    <script>
+        console.log(zTransfer)
+        'use strict';
+
+        new Vue({
+            el: '#app',
+            data: function data() {
+                return {
+                    zTransferShew: false
+                };
+            },
+
+            components: {
+                zTransfer: zTransfer
+            },
+            methods: {
+                OnZTransferShew: function OnZTransferShew() {
+                    this.zTransferShew = !this.zTransferShew;
+                },
+                cancel: function cancel() {
+                    this.zTransferShew = false;
+                },
+                confirmed: function confirmed(val) {
+                    console.log('回调确定>>', val);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
