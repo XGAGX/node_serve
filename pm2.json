@@ -1,0 +1,19 @@
+  
+{
+    "name"        : "node_serve", 
+    "script"      : "./app.js", 
+    "cwd"         : "./", 
+    "watch": [ 
+      "./"
+    ],
+    "ignore_watch" : [ 
+      "node_modules", 
+      "logs"
+    ],
+    "watch": true,
+    "error_file" : "./logs/app-err.log", 
+    "out_file"   : "./logs/app-out.log", 
+    "env": {
+        "NODE_ENV": "production"
+    }
+  }
