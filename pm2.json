@@ -8,7 +8,8 @@
     ],
     "ignore_watch" : [ 
       "node_modules", 
-      "logs"
+      "logs",
+      "uploads"
     ],
     "watch": true,
     "error_file" : "./logs/app-err.log", 
