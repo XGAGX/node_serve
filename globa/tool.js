@@ -1,3 +1,24 @@
+let jwt = require('jsonwebtoken');
+let config = require('../config');
 module.exports = {
-
+  // 创建token
+  createToken (data) {
+    let tken = null;
+    try {
+      tken = jwt.sign(data, config.toKenKey, { expiresIn: config.toKenTime });
+    } catch (error) {
+      tken = null;
+    }
+    return tken;
+  },
+  // 解密toKen
+  toKenToData (toKen) {
+    let data = null;
+    try {
+      data = jwt.verify(toKen, config.toKenKey);
+    } catch (error) {
+      data = null;
+    }
+    return data;
+  }
 };

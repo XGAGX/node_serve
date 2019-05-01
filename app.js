@@ -16,8 +16,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-// const upload = ;
-// app.use(multer({ dest: './uploads' }));
 // 静态文件夹
 app.use(express.static(path.join(__dirname, 'public')));
 // 全局处理
@@ -27,7 +25,8 @@ app.all('*', function (req, res, next) {
   res.append('Access-Control-Allow-Headers', 'Content-Type,Content-Length, Auth, Accept,X-Requested-With');
   res.append('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
   if (req.method === 'OPTIONS') {
-    res.sendStatus(200);/* 让options请求快速返回 */
+    res.append('Access-Control-Max-Age', '600'); // 前端缓存OPTIONS请求10分钟,减少OPTIONS请求
+    res.sendStatus(200);
   } else {
     next();
   }
