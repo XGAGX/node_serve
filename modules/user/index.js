@@ -5,15 +5,22 @@ const express = require('express');
 const router = express.Router();
 const sever = require('./serve');
 const globa = require('../../globa');
+// 验证模块
 const auth = require('../../globa/auth');
-const multer = require('multer');
+// const multer = require('multer');
 // 上传文件路径临时储存位置设置
-const upload = multer();
+// const upload = multer();
 
 // 本模块的子路由(往下添加即可)
-router.get('/', toMod(sever, 'login'));
-router.post('/', auth, toMod(sever, 'showlogin'));
-router.post('/upload', upload.array('files', 10), toMod(sever, 'upload'));
+router.post('/showlogin', auth, toMod(sever, 'showlogin'));
+// router.post('/upload', upload.array('files', 10), toMod(sever, 'upload'));
+
+// 登陆
+router.post('/login', toMod(sever, 'login'));
+// 注册帐号
+router.post('/register', toMod(sever, 'register'));
+// 刷新token
+router.post('/retoken', auth, toMod(sever, 'retoken'));
 // ===================================================
 // ===================================================
 

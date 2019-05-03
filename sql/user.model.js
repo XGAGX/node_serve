@@ -6,6 +6,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING
+    },
+    mail: {
+      type: DataTypes.STRING
+    },
+    state: {
+      type: DataTypes.STRING,
+      value: 0
+    },
+    token: {
+      type: DataTypes.STRING
+
     }
   });
 }

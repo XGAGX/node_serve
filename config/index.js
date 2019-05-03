@@ -12,7 +12,10 @@ if (!process.env.NODE_ENV) {
 } else {
   environment = environment[process.env.NODE_ENV];
 }
-
+// 随机key
+// const randomToKenKey = Math.random().toString(36).substr(2);
+const randomToKenKey = '1666';
+console.log('toKenKey>>', randomToKenKey);
 module.exports = {
   environment,
   httpPort: 8080,
@@ -22,9 +25,9 @@ module.exports = {
   privateKey: './config/localhost_8081.key',
   certificate: './config/localhost_8081.crt',
   // token私钥
-  toKenKey: 'gaoxiang',
-  // token过期时间
-  toKenTime: '7d',
+  toKenKey: randomToKenKey,
+  // token过期时间(d M m )
+  toKenTime: '1m',
   // 是否为开发环境(优先)
   isDev: true,
   // sql
@@ -40,7 +43,6 @@ module.exports = {
       min: 0, // 最小连接数
       acquire: 30000, // 超时ms
       idle: 10000// 允许空闲时间ms,控制空闲的连接大于最小连接数后会断开时长
-    },
-    logging: false// 控制台打印记录
+    }
   }
 };

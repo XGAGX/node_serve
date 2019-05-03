@@ -15,5 +15,4 @@ module.exports = {
   setReturnObj (data = null, code = 200, mag = '') {
     return { data: data, code: code, mag: mag };
   }
-
 };

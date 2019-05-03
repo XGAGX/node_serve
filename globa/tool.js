@@ -2,9 +2,12 @@ let jwt = require('jsonwebtoken');
 let config = require('../config');
 module.exports = {
   // 创建token
-  createToken (data) {
+  createToken (data, req) {
     let tken = null;
     try {
+      if (req) {
+        data['ip'] = req.ip;
+      }
       tken = jwt.sign(data, config.toKenKey, { expiresIn: config.toKenTime });
     } catch (error) {
       tken = null;
