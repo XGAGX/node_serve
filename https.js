@@ -9,7 +9,7 @@ module.exports = function (app) {
   let certificate = fs.readFileSync(config.certificate, 'utf8');
   let credentials = { key: privateKey, cert: certificate };
   // 创建服务
-  let httpsServer = https.createServer(credentials, app);
+  let httpsServer = https.createServer(credentials, app.callback());
   httpsServer.listen(config.httpsPort, function () {
     console.log('HTTPS 服务启动', config.httpsPort);
   });

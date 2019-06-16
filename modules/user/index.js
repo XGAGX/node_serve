@@ -1,8 +1,10 @@
 
 // 单个模块主文件
 // 配置模块的路由使用
-const express = require('express');
-const router = express.Router();
+// const express = require('express');
+// const router = express.Router();
+const Router = require('koa-router');
+const router = new Router();
 const sever = require('./serve');
 const globa = require('../../globa');
 // 验证模块
@@ -13,7 +15,7 @@ const auth = require('../../globa/auth');
 
 // 本模块的子路由(往下添加即可)
 router.post('/showlogin', auth, toMod(sever, 'showlogin'));
-// router.post('/upload', upload.array('files', 10), toMod(sever, 'upload'));
+router.post('/upload', toMod(sever, 'upload'));
 
 // 登陆
 router.post('/login', toMod(sever, 'login'));
@@ -32,19 +34,22 @@ router.post('/retoken', auth, toMod(sever, 'retoken'));
  * @returns
  */
 function toMod (sever, modName) {
-  return (req, res, next) => {
+  return async (ctx, next) => {
+    const res = ctx.response;
+    const req = ctx.request;
     if (sever[modName]) {
-      return new Promise(async (resolve, reject) => {
-        try {
-          let data = await sever[modName](req, res); // 不要在方法里面提交数据,直接返回数据即可,res只做添加请求头用
-          res.send(globa.setReturnObj(data));
-        } catch (err) {
-          console.log('模块运行出错>>', '模块名称:' + modName, '路径:' + req.baseUrl, '错误信息:' + err.message);
-          res.status(500).send(globa.setReturnObj(null, 500, '模块运行出错'));
-        }
-      });
+      try {
+        res.status = 200; // 匹配上路由了
+        let data = await sever[modName](req, res); // 运行对应的模块,获取返回数据
+        res.body = globa.setReturnObj(data);
+      } catch (err) {
+        console.log('模块运行出错>>', '模块名称:' + modName, '路径:' + req.path, '错误信息:' + err.message);
+        res.status = 500;
+        res.body = globa.setReturnObj(null, 500, '模块运行出错');
+      }
     } else {
-      res.status(500).send(globa.setReturnObj(null, 500, '找不到这个模块'));
+      res.status = 500;
+      res.body = globa.setReturnObj(null, 500, '模块运行出错');
     }
   };
 }

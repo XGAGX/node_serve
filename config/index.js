@@ -1,23 +1,7 @@
 let production = require('./environment/production');
 let test = require('./environment/test');
 let development = require('./environment/development');
-// 环境判断
-let environment = {
-  production, // 生产环境
-  test, // 测试环境
-  development// 开发环境
-};
-if (!process.env.NODE_ENV) {
-  environment = environment['development'];
-} else {
-  environment = environment[process.env.NODE_ENV];
-}
-// 随机key
-// const randomToKenKey = Math.random().toString(36).substr(2);
-const randomToKenKey = '1666';
-console.log('toKenKey>>', randomToKenKey);
-module.exports = {
-  environment,
+const config = { // 全局配置
   httpPort: 8080,
   // httpsPort: 8080,
   httpsPort: 8081, // 0 关闭 https端口号
@@ -25,12 +9,12 @@ module.exports = {
   privateKey: './config/localhost_8081.key',
   certificate: './config/localhost_8081.crt',
   // token私钥
-  toKenKey: randomToKenKey,
+  toKenKey: '1666', // 随机数 Math.random().toString(36).substr(2);
   // token过期时间(d M m )
   toKenTime: '1m',
-  // 是否为开发环境(优先)
+  // 是否为忽略env直接设置为开发环境(优先)
   isDev: true,
-  // sql
+  // sql配置
   sql: {
     database: 'gaoxiang', // 数据库名称
     username: 'root', // 帐号
@@ -46,3 +30,20 @@ module.exports = {
     }
   }
 };
+/// ////////////////// 初始化 ///////////////////////////
+// 环境判断
+let environment = {
+  production, // 生产环境
+  test, // 测试环境
+  development// 开发环境
+};
+// 根据环境载入配置
+if (!process.env.NODE_ENV) {
+  environment = environment['development'];
+} else {
+  environment = environment[process.env.NODE_ENV];
+}
+// 环境配置与全局配置合并
+Object.assign(config, environment);
+console.log('toKenKey>>', config.toKenKey);
+module.exports = config;

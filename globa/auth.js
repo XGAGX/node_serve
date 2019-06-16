@@ -4,8 +4,9 @@
  */
 const globa = require('./index');
 let config = require('../config');
-module.exports = function (req, res, next) {
-//   req.info = user.getUser(req);
+module.exports = async function (ctx, next) {
+  const res = ctx.response;
+  const req = ctx.request;
   let token = req.query.access_token || req.headers.access_token;
   let toKenToData = null;
   if (token) {
@@ -16,7 +17,8 @@ module.exports = function (req, res, next) {
   }
 
   if (!toKenToData) {
-    res.status(401).send(globa.setReturnObj(null, 401, '请重新登录'));
+    res.status = 401;
+    res.body = globa.setReturnObj(null, 401, '请重新登录');
   } else {
     req.user = toKenToData;
     next();

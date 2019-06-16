@@ -9,7 +9,9 @@
     "ignore_watch" : [ 
       "node_modules", 
       "logs",
-      "uploads"
+      "public",
+      "uploads",
+      "temp"
     ],
     "watch": true,
     "error_file" : "./logs/app-err.log", 

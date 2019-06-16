@@ -1,5 +1,3 @@
 module.exports = {
-  // 需要判断权限的目录['login']
-  postPrivateModule: [''],
-  getPrivateModule: ['']
+  isCron: true // 是否启动定时任务
 };

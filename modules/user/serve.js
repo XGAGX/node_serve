@@ -25,10 +25,11 @@ module.exports.showlogin = async function (req) {
  *上传文件测试
  */
 module.exports.upload = async function (req) {
-  return {
-    originalname: req.files[0].originalname,
-    size: req.files[0].size
-  };
+  return (req.files && Object.keys(req.files).length > 0 ? {
+    files: Object.keys(req.files),
+    name: req.files[Object.keys(req.files)].name,
+    size: req.files[Object.keys(req.files)].size
+  } : '没有文件');
 };
 
 /**
@@ -82,7 +83,7 @@ module.exports.register = async function (req, res) {
     }
     // console.log(data);
   } catch (err) {
-    res.status(500);
+    res.status = 500;
     returnDate = err.message;
   }
   return returnDate;
@@ -176,11 +177,11 @@ module.exports.retoken = async function (req, res) {
       };
     } else {
       // 直接强制下线
-      res.status(401);
+      res.status = 401;
       returnDate = '未登陆';
     }
   } else {
-    res.status(401);
+    res.status = 401;
     returnDate = '未登陆';
   }
   return returnDate;
